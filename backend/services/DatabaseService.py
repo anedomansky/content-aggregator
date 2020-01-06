@@ -11,13 +11,38 @@ class DatabaseService:
         self.__password = "postgres"
         self.__host = "127.0.0.1"
         self.__port = "5432"
-        self.__connection_string = "database=%s user=%s password=%s host=%s port=%s" % (self.__database, self.__user, self.__password, self.__host, self.__port)
+        self.__connection_string = "dbname=%s user=%s password=%s host=%s port=%s" % (self.__database, self.__user, self.__password, self.__host, self.__port)
     
-    def executeQuery(self, query):
+    def executeQueries(self, queries):
         """
-            Establishes a database connection and executes a query.
+            Establishes a database connection and executes a list of queries >= 1.
         """
-        #con = psycopg2.connect(database="content_aggregator", user="db_user", password="postgres", host="127.0.0.1", port="5432")
-        con = psycopg2.connect(self.__connection_string)
+        connection = psycopg2.connect(self.__connection_string)
         print("Connection established successfully!")
-        con.close()
+        cursor = connection.cursor()
+        for query in queries:
+            cursor.execute(query)
+        connection.commit()
+        connection.close()
+
+    def initialize(self):
+        """
+            Creates all necessary tables if they do not exist already.
+        """
+        self.executeQueries([
+            """
+                CREATE TABLE IF NOT EXISTS GAMING
+                (ID SERIAL PRIMARY KEY NOT NULL,
+                WEBSITE VARCHAR(50) NOT NULL,  
+                SNIPPET VARCHAR(100) NOT NULL,  
+                LINK VARCHAR(50) NOT NULL);
+            """,
+            """
+                CREATE TABLE IF NOT EXISTS NEWS
+                (ID SERIAL PRIMARY KEY NOT NULL,
+                WEBSITE VARCHAR(50) NOT NULL,  
+                SNIPPET VARCHAR(100) NOT NULL,  
+                LINK VARCHAR(50) NOT NULL);
+            """
+        ])
+        print("Tables were created successfully!")
