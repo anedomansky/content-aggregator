@@ -13,7 +13,7 @@ class DatabaseService:
         self.__port = "5432"
         self.__connection_string = "dbname=%s user=%s password=%s host=%s port=%s" % (self.__database, self.__user, self.__password, self.__host, self.__port)
     
-    def executeQueries(self, queries):
+    def executeQueries(self, queries, isSelect):
         """
             Establishes a database connection and executes a list of queries >= 1.
         """
@@ -22,8 +22,14 @@ class DatabaseService:
         cursor = connection.cursor()
         for query in queries:
             cursor.execute(query)
-        connection.commit()
-        connection.close()
+        
+        if(isSelect):
+            rows = cursor.fetchall()
+            connection.close()
+            return rows
+        else:
+            connection.commit()
+            connection.close()
 
     def initialize(self):
         """
@@ -35,14 +41,15 @@ class DatabaseService:
                 (ID SERIAL PRIMARY KEY NOT NULL,
                 WEBSITE VARCHAR(50) NOT NULL,  
                 SNIPPET VARCHAR(100) NOT NULL,  
-                LINK VARCHAR(50) NOT NULL);
+                LINK VARCHAR(50) NOT NULL,
+                CREATED DATE DEFAULT CURRENT_DATE);
             """,
             """
                 CREATE TABLE IF NOT EXISTS NEWS
                 (ID SERIAL PRIMARY KEY NOT NULL,
                 WEBSITE VARCHAR(50) NOT NULL,  
                 SNIPPET VARCHAR(100) NOT NULL,  
-                LINK VARCHAR(50) NOT NULL);
+                LINK VARCHAR(50) NOT NULL,
+                CREATED DATE DEFAULT CURRENT_DATE);
             """
-        ])
-        print("Tables were created successfully!")
+        ], False)
