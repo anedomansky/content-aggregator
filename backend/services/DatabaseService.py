@@ -23,7 +23,7 @@ class DatabaseService:
         for query in queries:
             cursor.execute(query)
         
-        if(isSelect):
+        if isSelect:
             rows = cursor.fetchall()
             connection.close()
             return rows

@@ -1,3 +1,6 @@
+import requests
+from bs4 import BeautifulSoup
+
 class GamingWebsiteService:
     """
         Service which handles all database interaction for the gaming category.
@@ -25,7 +28,24 @@ class GamingWebsiteService:
             Fetches new stories from the specified website of the gaming category.
             Then parses the HTML and finally adds the new stories to the table in the database.
         """
-        # fetch the HTML form the homepage
-        # switch case in order to determine the correct website
-        # parse the HTML and extract the stories
+        if website == "vg247":
+            url = "https://www.vg247.com"
+        elif website == "gamerant":
+            url = "https://gamerant.com"
+        elif website == "gameinformer":
+            url = "https://www.gameinformer.com"
+        else:
+            return None
+        
+        result = requests.get(url);
+        print(result.status_code)
+        rawContent = result.content
+        soup = BeautifulSoup(rawContent)
+        print(soup)
+
+        # <p class="title">
+        # <a href="https://www.vg247.com/2020/01/07/xbox-series-x-release-date-specs-games-everything-we-know/">Xbox Series X release date, specs, games – everything we know</a>
+        # </p>
+        # parse the HTML and extract the stories - find a way to get all <p>s with class "title" - then get the url + text from child (<a>)
+        # soup.findAll("p", {"class": "title"}) - test this
         # add the new stories to the database table
