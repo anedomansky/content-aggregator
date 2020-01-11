@@ -9,7 +9,6 @@ databaseService = DatabaseService()
 newsWebsiteService = NewsWebsiteService(databaseService)
 gamingWebsiteService = GamingWebsiteService(databaseService)
 
-
 @app.route('/')
 def initializeDatabase():
     """
