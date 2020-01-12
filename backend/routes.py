@@ -20,7 +20,7 @@ def initializeDatabase():
     }
 
 @app.route('/news/all')
-def getAllStories():
+def getAllNewsStories():
     """
         Returns all stories that are currently in the news table of the database. 
     """
@@ -39,6 +39,16 @@ def updateNewsStories():
     newsWebsiteService.updateStories(website, databaseService)
     return {
         "success": "Updated the news table with the most recent stories from %s." % (website)
+    }
+
+@app.route('/gaming/all')
+def getAllGamingStories():
+    """
+        Returns all stories that are currently in the gaming table of the database. 
+    """
+    stories = gamingWebsiteService.getAllStories()
+    return {
+        "stories": stories
     }
 
 @app.route('/gaming/update')

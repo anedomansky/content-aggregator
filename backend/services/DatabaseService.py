@@ -21,12 +21,24 @@ class DatabaseService:
         print("Connection established successfully!")
         cursor = connection.cursor()
         for query in queries:
-            cursor.execute(query)
-        
+            try:
+                cursor.execute(query)
+            except psycopg2.DatabaseError as error:
+                print("\n\nException while executing query:\n %s" % error.pgerror)
+
         if isSelect:
             rows = cursor.fetchall()
             connection.close()
-            return rows
+
+            result = []
+            for row in rows:
+                result.append({
+                    "website": row[0],
+                    "snippet": row[1],
+                    "link": row[2]
+                })
+
+            return result
         else:
             connection.commit()
             connection.close()
@@ -39,17 +51,17 @@ class DatabaseService:
             """
                 CREATE TABLE IF NOT EXISTS GAMING
                 (ID SERIAL PRIMARY KEY NOT NULL,
-                WEBSITE VARCHAR(50) NOT NULL,  
-                SNIPPET VARCHAR(100) NOT NULL,  
-                LINK VARCHAR(50) NOT NULL,
+                WEBSITE VARCHAR(50) NOT NULL,
+                SNIPPET VARCHAR(250) NOT NULL UNIQUE,
+                LINK VARCHAR(250) NOT NULL UNIQUE,
                 CREATED DATE DEFAULT CURRENT_DATE);
             """,
             """
                 CREATE TABLE IF NOT EXISTS NEWS
                 (ID SERIAL PRIMARY KEY NOT NULL,
-                WEBSITE VARCHAR(50) NOT NULL,  
-                SNIPPET VARCHAR(100) NOT NULL,  
-                LINK VARCHAR(50) NOT NULL,
+                WEBSITE VARCHAR(50) NOT NULL,
+                SNIPPET VARCHAR(250) NOT NULL UNIQUE,
+                LINK VARCHAR(250) NOT NULL UNIQUE,
                 CREATED DATE DEFAULT CURRENT_DATE);
             """
         ], False)

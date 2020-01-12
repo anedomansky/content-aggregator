@@ -32,15 +32,25 @@ class GamingWebsiteService:
         if website == "vg247":
             url = "https://www.vg247.com"
             result = requests.get(url)
-            print("HTTP RESPONSE CODE:", result.status_code)
-            raw_content = result.content
-            soup = BeautifulSoup(raw_content, "html.parser")
-            all_titles = soup.findAll("p", {"class": "title"})
-            top_titles = all_titles[:10]
+            if result.status_code == 200:
+                raw_content = result.content
+                soup = BeautifulSoup(raw_content, "html.parser")
+                all_titles = soup.findAll("p", {"class": "title"})
+                top_titles = all_titles[:10]
 
-            for title in top_titles:
-                print(title.a.string)
-                print(title.a.get("href"))
+                queries = []
+                for title in top_titles:
+                    # print(title.a.string)
+                    # print(title.a.get("href"))
+                    queries.append(
+                        """
+                            INSERT INTO GAMING (WEBSITE, SNIPPET, LINK, CREATED)
+                            VALUES ('%s', '%s', '%s', DEFAULT);
+                        """ % (website, title.a.string, title.a.get("href"))
+                    )
+                self.__database_service.executeQueries(queries, False)
+            else:
+                print("Fetching the HTML failed!", result.status_code)
         elif website == "gamerant":
             url = "https://gamerant.com"
         elif website == "gameinformer":
