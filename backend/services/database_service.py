@@ -12,8 +12,8 @@ class DatabaseService:
         self.__host = "127.0.0.1"
         self.__port = "5432"
         self.__connection_string = "dbname=%s user=%s password=%s host=%s port=%s" % (self.__database, self.__user, self.__password, self.__host, self.__port)
-    
-    def executeQueries(self, queries, isSelect):
+
+    def execute_queries(self, queries, is_select):
         """
             Establishes a database connection and executes a list of queries >= 1.
         """
@@ -26,7 +26,7 @@ class DatabaseService:
             except psycopg2.DatabaseError as error:
                 print("\n\nException while executing query:\n %s" % error.pgerror)
 
-        if isSelect:
+        if is_select:
             rows = cursor.fetchall()
             connection.close()
 
@@ -42,12 +42,13 @@ class DatabaseService:
         else:
             connection.commit()
             connection.close()
+            return None
 
     def initialize(self):
         """
             Creates all necessary tables if they do not exist already.
         """
-        self.executeQueries([
+        self.execute_queries([
             """
                 CREATE TABLE IF NOT EXISTS GAMING
                 (ID SERIAL PRIMARY KEY NOT NULL,
