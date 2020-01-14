@@ -53,16 +53,16 @@ class DatabaseService:
                 CREATE TABLE IF NOT EXISTS GAMING
                 (ID SERIAL PRIMARY KEY NOT NULL,
                 WEBSITE VARCHAR(50) NOT NULL,
-                SNIPPET VARCHAR(250) NOT NULL UNIQUE,
-                LINK VARCHAR(250) NOT NULL UNIQUE,
+                SNIPPET VARCHAR(250) NOT NULL,
+                LINK VARCHAR(250) NOT NULL,
                 CREATED DATE DEFAULT CURRENT_DATE);
             """,
             """
                 CREATE TABLE IF NOT EXISTS NEWS
                 (ID SERIAL PRIMARY KEY NOT NULL,
                 WEBSITE VARCHAR(50) NOT NULL,
-                SNIPPET VARCHAR(250) NOT NULL UNIQUE,
-                LINK VARCHAR(250) NOT NULL UNIQUE,
+                SNIPPET VARCHAR(250) NOT NULL,
+                LINK VARCHAR(250) NOT NULL,
                 CREATED DATE DEFAULT CURRENT_DATE);
             """
         ], False)

@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 class GamingWebsiteService:
     """
         Service which handles all database interaction for the gaming category.
@@ -9,9 +8,6 @@ class GamingWebsiteService:
 
     def __init__(self, database_service):
         self.__database_service = database_service
-        self.__vg247 = "insert link to the homepage here"
-        self.__gamerant = "insert link to the homepage here"
-        self.__gameinformer = "insert link to the homepage here"
 
     def get_all_stories(self):
         """
@@ -36,15 +32,16 @@ class GamingWebsiteService:
                 raw_content = result.content
                 soup = BeautifulSoup(raw_content, "html.parser")
                 all_titles = soup.findAll("p", {"class": "title"})
-                top_titles = all_titles[:10]
+                top_titles = all_titles[:20]
 
                 queries = []
                 for title in top_titles:
+                    title_text = title.a.string.replace("'", " ")
                     queries.append(
                         """
                             INSERT INTO GAMING (WEBSITE, SNIPPET, LINK, CREATED)
                             VALUES ('%s', '%s', '%s', DEFAULT);
-                        """ % (website, title.a.string, title.a.get("href"))
+                        """ % (website, title_text, title.a.get("href"))
                     )
                 self.__database_service.execute_queries(queries, False)
             else:
@@ -56,15 +53,16 @@ class GamingWebsiteService:
                 raw_content = result.content
                 soup = BeautifulSoup(raw_content, "html.parser")
                 all_titles = soup.findAll("a", {"class": "bc-title-link"})
-                top_titles = all_titles[:10]
+                top_titles = all_titles[:20]
 
                 queries = []
                 for title in top_titles:
+                    title_text = title.string.replace("'", " ")
                     queries.append(
                         """
                             INSERT INTO GAMING (WEBSITE, SNIPPET, LINK, CREATED)
                             VALUES ('%s', '%s', '%s%s', DEFAULT);
-                        """ % (website, title.string, url, title.get("href"))
+                        """ % (website, title_text, url, title.get("href"))
                     )
                 self.__database_service.execute_queries(queries, False)
             else:
@@ -75,16 +73,16 @@ class GamingWebsiteService:
             if result.status_code == 200:
                 raw_content = result.content
                 soup = BeautifulSoup(raw_content, "html.parser")
-                print(soup.prettify())
                 all_titles = soup.findAll("h2", {"class": "page-title"})
-                top_titles = all_titles[:10]
+                top_titles = all_titles[:20]
 
                 queries = []
                 for title in top_titles:
+                    title_text = title.text.strip().replace("'", " ")
                     queries.append(
                         """
                             INSERT INTO GAMING (WEBSITE, SNIPPET, LINK, CREATED)
                             VALUES ('%s', '%s', '%s%s', DEFAULT);
-                        """ % (website, title.text.strip(), url, title.a.get("href"))
+                        """ % (website, title_text, url, title.a.get("href"))
                     )
                 self.__database_service.execute_queries(queries, False)
