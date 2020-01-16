@@ -13,11 +13,32 @@ class NewsWebsiteService:
         """
             Returns all stories that are currently in the news table of the database.
         """
-        stories = self.__database_service.execute_queries([
+        welt = self.__database_service.execute_queries([
             """
-                SELECT WEBSITE, SNIPPET, LINK FROM NEWS ORDER BY CREATED DESC;
+                SELECT SNIPPET, LINK FROM NEWS
+                WHERE WEBSITE = 'welt'
+                ORDER BY CREATED DESC;
             """
         ], True)
+        spiegel = self.__database_service.execute_queries([
+            """
+                SELECT SNIPPET, LINK FROM NEWS
+                WHERE WEBSITE = 'spiegel'
+                ORDER BY CREATED DESC;
+            """
+        ], True)
+        focus = self.__database_service.execute_queries([
+            """
+                SELECT SNIPPET, LINK FROM NEWS
+                WHERE WEBSITE = 'focus'
+                ORDER BY CREATED DESC;
+            """
+        ], True)
+        stories = {
+            "welt": welt,
+            "spiegel": spiegel,
+            "focus": focus,
+        }
         return stories
 
     def update_stories(self, website):
@@ -37,7 +58,6 @@ class NewsWebsiteService:
                 queries = []
                 for title in top_titles:
                     title_text = title.get("title").replace("'", " ")
-                    print(title.get("title"))
                     queries.append(
                         """
                             INSERT INTO NEWS (WEBSITE, SNIPPET, LINK, CREATED)
@@ -89,3 +109,5 @@ class NewsWebsiteService:
                         """ % (website, title_text, title.get("href"))
                     )
                 self.__database_service.execute_queries(queries, False)
+            else:
+                print("Fetching the HTML failed!", result.status_code)

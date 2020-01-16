@@ -33,9 +33,8 @@ class DatabaseService:
             result = []
             for row in rows:
                 result.append({
-                    "website": row[0],
-                    "snippet": row[1],
-                    "link": row[2]
+                    "snippet": row[0],
+                    "link": row[1]
                 })
 
             return result

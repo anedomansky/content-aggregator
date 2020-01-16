@@ -13,11 +13,32 @@ class GamingWebsiteService:
         """
             Returns all stories that are currently in the gaming table of the database.
         """
-        stories = self.__database_service.execute_queries([
+        vg247 = self.__database_service.execute_queries([
             """
-                SELECT WEBSITE, SNIPPET, LINK FROM GAMING ORDER BY CREATED DESC;
+                SELECT SNIPPET, LINK FROM GAMING
+                WHERE WEBSITE = 'vg247'
+                ORDER BY CREATED DESC;
             """
         ], True)
+        gameinformer = self.__database_service.execute_queries([
+            """
+                SELECT SNIPPET, LINK FROM GAMING
+                WHERE WEBSITE = 'gameinformer'
+                ORDER BY CREATED DESC;
+            """
+        ], True)
+        gamerant = self.__database_service.execute_queries([
+            """
+                SELECT SNIPPET, LINK FROM GAMING
+                WHERE WEBSITE = 'gamerant'
+                ORDER BY CREATED DESC;
+            """
+        ], True)
+        stories = {
+            "vg247": vg247,
+            "gameinformer": gameinformer,
+            "gamerant": gamerant
+        }
         return stories
 
     def update_stories(self, website):
@@ -86,3 +107,5 @@ class GamingWebsiteService:
                         """ % (website, title_text, url, title.a.get("href"))
                     )
                 self.__database_service.execute_queries(queries, False)
+            else:
+                print("Fetching the HTML failed!", result.status_code)
