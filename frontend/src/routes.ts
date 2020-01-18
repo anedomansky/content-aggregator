@@ -1,17 +1,13 @@
 import { RouteConfig } from 'react-router-config';
-// import LandingPage from './components/landingpage/LandingPage';
-// import ExpenseList from './components/expense/list/ExpenseList';
-// import ExpenseAdd from './components/expense/add/ExpenseAdd';
-// import CategoryList from './components/category/list/CategoryList';
-// import CategoryAdd from './components/category/add/CategoryAdd';
-// import NotFoundPage from './components/notfoundpage/NotFoundPage';
+import LandingPage from './components/landingpage/LandingPage';
+import NotFoundPage from './components/notfoundpage/NotFoundPage';
 
 const routes: RouteConfig[] = [
-    // {
-    //     component: LandingPage,
-    //     exact: true,
-    //     path: '/',
-    // },
+    {
+        component: LandingPage,
+        exact: true,
+        path: '/',
+    },
     // {
     //     component: CategoryList,
     //     path: '/category/all',
@@ -28,9 +24,9 @@ const routes: RouteConfig[] = [
     //     component: ExpenseAdd,
     //     path: '/expense/add',
     // },
-    // {
-    //     component: NotFoundPage,
-    // },
+    {
+        component: NotFoundPage,
+    },
 ];
 
 export default routes;

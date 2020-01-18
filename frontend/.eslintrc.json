@@ -37,6 +37,7 @@
             "error",
             4
         ],
+        "import/extensions": "off",
         "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "@typescript-eslint/no-non-null-assertion": "off",

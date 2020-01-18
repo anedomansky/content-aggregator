@@ -5,7 +5,8 @@
   "description": "Frontend part of the app.",
   "main": "./src/index.tsx",
   "scripts": {
-    "start": "ts-node ./build/server.ts"
+    "start": "ts-node ./build/server.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Alexander Nedomansky <anedomansky@googlemail.com>",
@@ -22,7 +23,7 @@
     "@types/webpack-env": "^1.14.0",
     "@types/webpack-hot-middleware": "^2.16.5",
     "@types/webpack-merge": "^4.1.5",
-    "@typescript-eslint/eslint-plugin": "^2.3.2",
+    "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.9.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
