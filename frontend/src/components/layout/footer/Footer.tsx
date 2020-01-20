@@ -3,7 +3,10 @@ import './Footer.scss';
 
 const Footer: React.FC = () => (
     <footer>
-        FOOTER
+        <p>
+            &copy;
+            {` ${new Date().getFullYear()}`}
+        </p>
     </footer>
 );
 

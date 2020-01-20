@@ -1,8 +1,53 @@
 header {
     grid-area: header;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding: 1rem;
-    font-size: 1.5rem;
+    background-color: #696969;
+
+    & .title {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: white;
+        cursor: pointer;
+        border: 0.5rem solid black;
+        border-radius: 1rem;
+        padding: 1rem;
+        font-weight: bolder;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+
+        &:hover::before {
+            top: 25%;
+            left: 0;
+        }
+
+        &:before {
+            content: "Back to home?";
+            left: 0;
+            top: -100%;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        &:after {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            transition: all 0.3s;
+        }
+
+        &:hover span {
+            color: #696969;
+        }
+
+        & span {
+            transition: all 0.3s;
+        }
+    }
 }
