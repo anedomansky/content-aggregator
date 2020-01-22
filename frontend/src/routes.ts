@@ -1,6 +1,8 @@
 import { RouteConfig } from 'react-router-config';
 import LandingPage from './components/landingpage/LandingPage';
 import NotFoundPage from './components/notfoundpage/NotFoundPage';
+import GamingPage from './components/gaming/GamingPage';
+import NewsPage from './components/news/Newspage';
 
 const routes: RouteConfig[] = [
     {
@@ -8,22 +10,14 @@ const routes: RouteConfig[] = [
         exact: true,
         path: '/',
     },
-    // {
-    //     component: CategoryList,
-    //     path: '/category/all',
-    // },
-    // {
-    //     component: CategoryAdd,
-    //     path: '/category/add',
-    // },
-    // {
-    //     component: ExpenseList,
-    //     path: '/expense/all',
-    // },
-    // {
-    //     component: ExpenseAdd,
-    //     path: '/expense/add',
-    // },
+    {
+        component: GamingPage,
+        path: '/gaming',
+    },
+    {
+        component: NewsPage,
+        path: '/news',
+    },
     {
         component: NotFoundPage,
     },

@@ -3,11 +3,11 @@ import './LandingPage.scss';
 import { Link } from 'react-router-dom';
 
 const LandingPage: React.FC = () => (
-    <article className="landingpage">
-        <h1 className="landingpage__headline">Categories:</h1>
+    <article className="landing-page">
+        <h1 className="landing-page__headline">Categories:</h1>
         <div>
-            <Link to="/" className="landingpage__link"><span>Gaming</span></Link>
-            <Link to="/" className="landingpage__link"><span>News</span></Link>
+            <Link to="/gaming" className="landing-page__link"><span>Gaming</span></Link>
+            <Link to="/news" className="landing-page__link"><span>News</span></Link>
         </div>
     </article>
 );

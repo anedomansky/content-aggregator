@@ -1,13 +1,13 @@
-.landingpage {
+.landing-page {
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    & .landingpage__headline {
+    & .landing-page__headline {
         font-size: 3.5rem;
     }
 
-    & .landingpage__link {
+    & .landing-page__link {
         background-color: rgb(151, 38, 38);
         border: none;
         color: white;
