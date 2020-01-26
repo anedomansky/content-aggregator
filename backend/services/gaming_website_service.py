@@ -67,7 +67,7 @@ class GamingWebsiteService:
                 self.__database_service.execute_queries(queries, False)
             else:
                 print("Fetching the HTML failed!", result.status_code)
-        elif website == "gamerant":
+        elif website == "gamerant": # TODO - not working anymore?!?!?
             url = "https://gamerant.com"
             result = requests.get(url)
             if result.status_code == 200:

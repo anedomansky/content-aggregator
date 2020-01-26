@@ -1,9 +1,11 @@
 from flask import Flask, request
+from flask_cors import CORS
 from backend.services.database_service import DatabaseService
 from backend.services.news_website_service import NewsWebsiteService
 from backend.services.gaming_website_service import GamingWebsiteService
 
 APP = Flask(__name__)
+CORSAPP = CORS(APP)
 
 DATABASE_SERVICE = DatabaseService()
 NEWS_WEBSITE_SERVICE = NewsWebsiteService(DATABASE_SERVICE)

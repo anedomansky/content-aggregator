@@ -1,14 +1,29 @@
-.landing-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.gaming-page {
     padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-auto-rows: auto;
+    grid-template-areas: 
+        "first second third"
+        "first second third"
+        "first second third"
+        "first second third"
+        "back . .";
 
-    & .landing-page__headline {
-        font-size: 3.5rem;
+    & .gaming-page__first-page {
+        grid-area: first;
     }
 
-    & .landing-page__link {
+    & .gaming-page__second-page {
+        grid-area: second;
+    }
+
+    & .gaming-page__third-page {
+        grid-area: third;
+    }
+
+    & .back-btn {
+        grid-area: back;
         background-color: rgb(151, 38, 38);
         border: none;
         color: white;
@@ -28,23 +43,21 @@
         }
 
         & span:after {
-            content: '\00bb';
+            content: '\00ab';
             position: absolute;
             opacity: 0;
             top: 0;
-            right: -2rem;
+            left: -2rem;
             transition: 0.5s;
         }
 
         &:hover span {
-            padding-right: 1.5rem;
+            padding-left: 1.5rem;
 
             &:after {
                 opacity: 1;
-                right: 0;
+                left: 0;
             }
         }
-
-
     }
 }
