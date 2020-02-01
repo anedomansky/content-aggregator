@@ -1,14 +1,32 @@
 .gaming-page {
     padding: 1rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: auto;
-    grid-template-areas: 
+    grid-column-gap: 0.5rem;
+    grid-template-areas:
+        ". fetch ."
         "first second third"
         "first second third"
         "first second third"
         "first second third"
         "back . .";
+
+    & .gaming-page__fetch-btn {
+        grid-area: fetch;
+        background-color: rgb(151, 38, 38);
+        border: none;
+        color: white;
+        padding: 2rem 3rem;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 1.5rem;
+        margin: 1.5rem 2px;
+        cursor: pointer;
+        border-radius: 1rem;
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+    }
 
     & .gaming-page__first-page {
         grid-area: first;
@@ -35,6 +53,7 @@
         margin: 1.5rem 2px;
         cursor: pointer;
         border-radius: 1rem;
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
         width: 8rem;
 
         & span {
