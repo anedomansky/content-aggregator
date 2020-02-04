@@ -5,12 +5,11 @@ import './GamingPage.scss';
 import { IStories } from '../../interfaces/IStories';
 import { IPage } from '../../interfaces/IPage';
 
-// TODO: fetch new stories onClick
 const GamingPage: React.FC = () => {
     const [vg247News, setVg247News] = useState<IPage[]>([]);
     const [gamerantNews, setGamerantNews] = useState<IPage[]>([]);
     const [gameinformerNews, setGameinformerNews] = useState<IPage[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const fetchNews = async (): Promise<IStories> => {
         const responseRaw = await fetch('http://localhost:5000/gaming/all');
@@ -18,7 +17,15 @@ const GamingPage: React.FC = () => {
         return response;
     };
 
+    const updateNews = async (): Promise<void> => {
+        await fetch('http://localhost:5000/gaming/update?website=gamerant');
+        await fetch('http://localhost:5000/gaming/update?website=gameinformer');
+        await fetch('http://localhost:5000/gaming/update?website=vg247');
+    };
+
     const setNews = async (): Promise<void> => {
+        setLoading(true);
+        await updateNews();
         const news = await fetchNews();
         setVg247News(news.stories.vg247);
         setGamerantNews(news.stories.gamerant);
@@ -37,7 +44,7 @@ const GamingPage: React.FC = () => {
     }
     return (
         <article className="gaming-page">
-            <button type="button" className="gaming-page__fetch-btn" onClick={() => console.log('Get new stories!')}>Fetch new stories?</button>
+            <button type="button" className="gaming-page__fetch-btn" onClick={setNews}>Fetch new stories?</button>
             <div className="gaming-page__first-page">
                 <List title="VG247" items={vg247News} />
             </div>

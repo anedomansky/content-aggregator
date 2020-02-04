@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+# TODO: figure out a way too only return the distinct rows from the table
 class GamingWebsiteService:
     """
         Service which handles all database interaction for the gaming category.
