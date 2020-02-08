@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 
 // TODO: style with home icon on hover - transform: translateY(300%) not working?
 const Header: React.FC = () => (
-    <header>
-        <Link to="/" className="title">
+    <header role="heading">
+        <Link to="/" className="title" role="link">
             <span>Content-Aggregator</span>
         </Link>
     </header>

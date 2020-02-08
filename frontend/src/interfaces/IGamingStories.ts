@@ -1,6 +1,6 @@
 import { IPage } from './IPage';
 
-export interface IStories {
+export interface IGamingStories {
     stories: {
         'vg247': IPage[];
         'gamerant': IPage[];

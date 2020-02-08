@@ -6,9 +6,9 @@ import Header from '../layout/header/Header';
 import Footer from '../layout/footer/Footer';
 
 const App: React.FC = () => (
-    <div className="content">
+    <div className="content" role="application">
         <Header />
-        <main>
+        <main role="main">
             {renderRoutes(routes)}
         </main>
         <Footer />

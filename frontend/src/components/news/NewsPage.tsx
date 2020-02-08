@@ -1,27 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import List from '../common/List';
+import './NewsPage.scss';
+import { INewsStories } from '../../interfaces/INewsStories';
+import { IPage } from '../../interfaces/IPage';
 
-interface State {
-    news: any[];
-}
+const NewsPage: React.FC = () => {
+    const [weltNews, setWeltNews] = useState<IPage[]>([]);
+    const [spiegelNews, setSpiegelNews] = useState<IPage[]>([]);
+    const [focusNews, setFocusNews] = useState<IPage[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
-class NewsPage extends React.PureComponent<{}, State> {
-    constructor(props: {}) {
-        super(props);
-        this.state = {
-            news: ['news1', 'news2'],
-        };
-    }
+    const fetchNews = async (): Promise<INewsStories> => {
+        const responseRaw = await fetch('http://localhost:5000/news/all');
+        const response = responseRaw.json();
+        return response;
+    };
 
-    render(): React.ReactNode {
-        const { news } = this.state;
+    const updateNews = async (): Promise<void> => {
+        await fetch('http://localhost:5000/news/update?website=welt');
+        await fetch('http://localhost:5000/news/update?website=spiegel');
+        await fetch('http://localhost:5000/news/update?website=focus');
+    };
+
+    const setNews = async (): Promise<void> => {
+        setLoading(true);
+        await updateNews();
+        const news = await fetchNews();
+        setWeltNews(news.stories.welt);
+        setSpiegelNews(news.stories.spiegel);
+        setFocusNews(news.stories.focus);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        setNews();
+    }, []);
+
+    if (loading) {
         return (
-            <article className="gaming-page">
-                <List title="News" items={news} />
-                <button type="button">Back</button>
-            </article>
+            <article className="news-pagel--loading">Loading news. Please wait...</article>
         );
     }
-}
+    return (
+        <article className="news-page">
+            <button type="button" className="news-page__fetch-btn" onClick={setNews}>Fetch new stories?</button>
+            <div className="news-page__first-page">
+                <List title="Welt" items={weltNews} />
+            </div>
+            <div className="news-page__second-page">
+                <List title="Spiegel" items={spiegelNews} />
+            </div>
+            <div className="news-page__third-page">
+                <List title="Focus" items={focusNews} />
+            </div>
+            <Link to="/" className="back-btn"><span>Back</span></Link>
+        </article>
+    );
+};
 
 export default NewsPage;

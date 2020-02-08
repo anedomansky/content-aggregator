@@ -1,7 +1,9 @@
+"""
+Execute SQL in order to store or retrieve news posts.
+"""
 import requests
 from bs4 import BeautifulSoup
 
-# TODO: figure out a way too only return the distinct rows from the table
 class GamingWebsiteService:
     """
         Service which handles all database interaction for the gaming category.
@@ -16,23 +18,35 @@ class GamingWebsiteService:
         """
         vg247 = self.__database_service.execute_queries([
             """
-                SELECT SNIPPET, LINK FROM GAMING
+                SELECT DISTINCT ON (SNIPPET) SNIPPET,
+                LINK
+                FROM GAMING
                 WHERE WEBSITE = 'vg247'
-                ORDER BY CREATED DESC;
+                ORDER BY
+                SNIPPET DESC,
+                CREATED DESC;
             """
         ], True)
         gameinformer = self.__database_service.execute_queries([
             """
-                SELECT SNIPPET, LINK FROM GAMING
+                SELECT DISTINCT ON (SNIPPET) SNIPPET,
+                LINK
+                FROM GAMING
                 WHERE WEBSITE = 'gameinformer'
-                ORDER BY CREATED DESC;
+                ORDER BY
+                SNIPPET DESC,
+                CREATED DESC;
             """
         ], True)
         gamerant = self.__database_service.execute_queries([
             """
-                SELECT SNIPPET, LINK FROM GAMING
+                SELECT DISTINCT ON (SNIPPET) SNIPPET,
+                LINK
+                FROM GAMING
                 WHERE WEBSITE = 'gamerant'
-                ORDER BY CREATED DESC;
+                ORDER BY
+                SNIPPET DESC,
+                CREATED DESC;
             """
         ], True)
         stories = {
@@ -67,7 +81,7 @@ class GamingWebsiteService:
                     )
                 self.__database_service.execute_queries(queries, False)
             else:
-                print("Fetching the HTML failed!", result.status_code)
+                print("Fetching the HTML failed!", result.status_code, website)
         elif website == "gamerant": # TODO - not working anymore?!?!?
             url = "https://gamerant.com"
             result = requests.get(url)
@@ -88,7 +102,7 @@ class GamingWebsiteService:
                     )
                 self.__database_service.execute_queries(queries, False)
             else:
-                print("Fetching the HTML failed!", result.status_code)
+                print("Fetching the HTML failed!", result.status_code, website)
         elif website == "gameinformer":
             url = "https://www.gameinformer.com/news"
             result = requests.get(url)
@@ -109,4 +123,4 @@ class GamingWebsiteService:
                     )
                 self.__database_service.execute_queries(queries, False)
             else:
-                print("Fetching the HTML failed!", result.status_code)
+                print("Fetching the HTML failed!", result.status_code, website)

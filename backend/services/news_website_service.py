@@ -1,3 +1,6 @@
+"""
+Execute SQL in order to store or retrieve news posts.
+"""
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,23 +18,35 @@ class NewsWebsiteService:
         """
         welt = self.__database_service.execute_queries([
             """
-                SELECT SNIPPET, LINK FROM NEWS
+                SELECT DISTINCT ON (SNIPPET) SNIPPET,
+                LINK
+                FROM NEWS
                 WHERE WEBSITE = 'welt'
-                ORDER BY CREATED DESC;
+                ORDER BY
+                SNIPPET DESC,
+                CREATED DESC;
             """
         ], True)
         spiegel = self.__database_service.execute_queries([
             """
-                SELECT SNIPPET, LINK FROM NEWS
+                SELECT DISTINCT ON (SNIPPET) SNIPPET,
+                LINK
+                FROM NEWS
                 WHERE WEBSITE = 'spiegel'
-                ORDER BY CREATED DESC;
+                ORDER BY
+                SNIPPET DESC,
+                CREATED DESC;
             """
         ], True)
         focus = self.__database_service.execute_queries([
             """
-                SELECT SNIPPET, LINK FROM NEWS
+                SELECT DISTINCT ON (SNIPPET) SNIPPET,
+                LINK
+                FROM NEWS
                 WHERE WEBSITE = 'focus'
-                ORDER BY CREATED DESC;
+                ORDER BY
+                SNIPPET DESC,
+                CREATED DESC;
             """
         ], True)
         stories = {

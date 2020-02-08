@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import List from '../common/List';
 import './GamingPage.scss';
-import { IStories } from '../../interfaces/IStories';
+import { IGamingStories } from '../../interfaces/IGamingStories';
 import { IPage } from '../../interfaces/IPage';
 
 const GamingPage: React.FC = () => {
@@ -11,7 +11,7 @@ const GamingPage: React.FC = () => {
     const [gameinformerNews, setGameinformerNews] = useState<IPage[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const fetchNews = async (): Promise<IStories> => {
+    const fetchNews = async (): Promise<IGamingStories> => {
         const responseRaw = await fetch('http://localhost:5000/gaming/all');
         const response = responseRaw.json();
         return response;

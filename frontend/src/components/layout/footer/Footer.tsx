@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.scss';
 
 const Footer: React.FC = () => (
-    <footer>
+    <footer role="contentinfo">
         <p>
             &copy;
             {` ${new Date().getFullYear()}`}
