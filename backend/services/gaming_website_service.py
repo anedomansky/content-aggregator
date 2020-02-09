@@ -38,12 +38,12 @@ class GamingWebsiteService:
                 CREATED DESC;
             """
         ], True)
-        gamerant = self.__database_service.execute_queries([
+        polygon = self.__database_service.execute_queries([
             """
                 SELECT DISTINCT ON (SNIPPET) SNIPPET,
                 LINK
                 FROM GAMING
-                WHERE WEBSITE = 'gamerant'
+                WHERE WEBSITE = 'polygon'
                 ORDER BY
                 SNIPPET DESC,
                 CREATED DESC;
@@ -52,7 +52,7 @@ class GamingWebsiteService:
         stories = {
             "vg247": vg247,
             "gameinformer": gameinformer,
-            "gamerant": gamerant
+            "polygon": polygon
         }
         return stories
 
@@ -82,13 +82,13 @@ class GamingWebsiteService:
                 self.__database_service.execute_queries(queries, False)
             else:
                 print("Fetching the HTML failed!", result.status_code, website)
-        elif website == "gamerant": # TODO - not working anymore?!?!?
-            url = "https://gamerant.com"
+        elif website == "polygon":
+            url = "https://www.polygon.com/"
             result = requests.get(url)
             if result.status_code == 200:
                 raw_content = result.content
                 soup = BeautifulSoup(raw_content, "html.parser")
-                all_titles = soup.findAll("a", {"class": "bc-title-link"})
+                all_titles = soup.findAll("a", {"data-analytics-link": "article"})
                 top_titles = all_titles[:20]
 
                 queries = []
@@ -97,8 +97,8 @@ class GamingWebsiteService:
                     queries.append(
                         """
                             INSERT INTO GAMING (WEBSITE, SNIPPET, LINK, CREATED)
-                            VALUES ('%s', '%s', '%s%s', DEFAULT);
-                        """ % (website, title_text, url, title.get("href"))
+                            VALUES ('%s', '%s', '%s', DEFAULT);
+                        """ % (website, title_text, title.get("href"))
                     )
                 self.__database_service.execute_queries(queries, False)
             else:

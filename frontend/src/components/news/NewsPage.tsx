@@ -39,11 +39,14 @@ const NewsPage: React.FC = () => {
 
     if (loading) {
         return (
-            <article className="news-pagel--loading">Loading news. Please wait...</article>
+            <article className="news-page--loading">
+                <div className="news-page--loading__spinner" />
+                <p>Loading news. Please wait...</p>
+            </article>
         );
     }
     return (
-        <article className="news-page">
+        <article className="news-page" role="region">
             <button type="button" className="news-page__fetch-btn" onClick={setNews}>Fetch new stories?</button>
             <div className="news-page__first-page">
                 <List title="Welt" items={weltNews} />

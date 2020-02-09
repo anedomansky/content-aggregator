@@ -1,3 +1,25 @@
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.gaming-page--loading {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    & .gaming-page--loading__spinner {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        animation: spin 2s linear infinite;
+    }
+}
+
 .gaming-page {
     padding: 1rem;
     display: grid;
@@ -77,5 +99,19 @@
                 left: 0;
             }
         }
+    }
+}
+
+@media all and (max-width: 500px) {
+    .gaming-page {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-column-gap: 0.5rem;
+        grid-template-areas:
+            "fetch "
+            "first"
+            "second"
+            "third"
+            "back";
     }
 }

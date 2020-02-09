@@ -8,7 +8,7 @@ interface Props {
 }
 
 const List: React.FC<Props> = ({ title, items }) => (
-    <article className="list">
+    <article className="list" role="list">
         <h1 className="list__title">{title}</h1>
         <ul className="list__items">
             {items.length === 0

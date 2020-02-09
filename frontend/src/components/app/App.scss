@@ -1,6 +1,6 @@
 .content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-template-areas: 
         "header header header header header"
         "main main main main main"
@@ -20,4 +20,19 @@ main {
 a {
     text-decoration: none;
     color: black;
+}
+
+@media all and (max-width: 500px) {
+    .content {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+            "header"
+            "main"
+            "main"
+            "main"
+            "main"
+            "main"
+            "footer";
+    }
 }

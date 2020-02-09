@@ -7,7 +7,7 @@ import { IPage } from '../../interfaces/IPage';
 
 const GamingPage: React.FC = () => {
     const [vg247News, setVg247News] = useState<IPage[]>([]);
-    const [gamerantNews, setGamerantNews] = useState<IPage[]>([]);
+    const [polygonNews, setPolygonNews] = useState<IPage[]>([]);
     const [gameinformerNews, setGameinformerNews] = useState<IPage[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -18,7 +18,7 @@ const GamingPage: React.FC = () => {
     };
 
     const updateNews = async (): Promise<void> => {
-        await fetch('http://localhost:5000/gaming/update?website=gamerant');
+        await fetch('http://localhost:5000/gaming/update?website=polygon');
         await fetch('http://localhost:5000/gaming/update?website=gameinformer');
         await fetch('http://localhost:5000/gaming/update?website=vg247');
     };
@@ -28,7 +28,7 @@ const GamingPage: React.FC = () => {
         await updateNews();
         const news = await fetchNews();
         setVg247News(news.stories.vg247);
-        setGamerantNews(news.stories.gamerant);
+        setPolygonNews(news.stories.polygon);
         setGameinformerNews(news.stories.gameinformer);
         setLoading(false);
     };
@@ -39,17 +39,20 @@ const GamingPage: React.FC = () => {
 
     if (loading) {
         return (
-            <article className="gaming-pagel--loading">Loading news. Please wait...</article>
+            <article className="gaming-page--loading">
+                <div className="gaming-page--loading__spinner" />
+                <p>Loading news. Please wait...</p>
+            </article>
         );
     }
     return (
-        <article className="gaming-page">
+        <article className="gaming-page" role="region">
             <button type="button" className="gaming-page__fetch-btn" onClick={setNews}>Fetch new stories?</button>
             <div className="gaming-page__first-page">
                 <List title="VG247" items={vg247News} />
             </div>
             <div className="gaming-page__second-page">
-                <List title="Gamerant" items={gamerantNews} />
+                <List title="Polygon" items={polygonNews} />
             </div>
             <div className="gaming-page__third-page">
                 <List title="Gameinformer" items={gameinformerNews} />
